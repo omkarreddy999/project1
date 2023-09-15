@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <limits.h>
+#include <climits>
 
 using namespace std;
 
@@ -204,15 +204,36 @@ void Table::display() {
     // }
 }
 
+// Function to read CSV data from a GitHub raw file URL
+bool readCsvFromUrl(const string& url, Table& table) {
+    // Create an HTTP GET request to fetch the raw content
+    // You can use a library like libcurl for this purpose
+    // Here, we assume you have already fetched the content and stored it in 'csvContent'
+    string csvContent = "Your CSV content here"; // Replace with actual CSV content
+
+    // Parse the CSV content and populate the 'table' object
+    stringstream ss(csvContent);
+    string line;
+    while (getline(ss, line)) {
+        stringstream lineStream(line);
+        aRow row;
+        string cell;
+        while (getline(lineStream, cell, ',')) {
+            row.myRow.push_back(cell);
+        }
+        table.myTable.push_back(row);
+    }
+
+    return true;
+}
+
 int main() {
     Table* aTable;
     int headerOrNot;
-    string csvFileName;
-    ifstream csvFile;
     int numColumns;
     int numRows;
 
-    cin >> headerOrNot >> csvFileName;
+    cin >> headerOrNot;
     cin >> numColumns;
 
     // Create a Table instance
@@ -227,23 +248,11 @@ int main() {
 
     cin >> numRows;
 
-    // Open and read the CSV file
-    csvFile.open(csvFileName);
-    if (!csvFile.is_open()) {
-        cerr << "Error: Unable to open CSV file." << endl;
+    // Read CSV data from the GitHub raw file URL
+    string githubCsvUrl = "https://raw.githubusercontent.com/omkarreddy999/project1/master/biostats.csv";
+    if (!readCsvFromUrl(githubCsvUrl, *aTable)) {
+        cerr << "Error: Unable to read CSV data from GitHub." << endl;
         return 1;
-    }
-
-    // Read and store the CSV data in aTable
-    string line;
-    while (getline(csvFile, line)) {
-        stringstream ss(line);
-        aRow row;
-        string cell;
-        while (getline(ss, cell, ',')) {
-            row.myRow.push_back(cell);
-        }
-        aTable->myTable.push_back(row);
     }
 
     cout << "Table Summary:" << endl;
