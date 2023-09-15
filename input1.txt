@@ -1,0 +1,8 @@
+1 biostats.csv
+5
+string
+char
+int
+int
+int
+18
