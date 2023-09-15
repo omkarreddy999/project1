@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <climits>
+#include <limits.h>
 
 using namespace std;
 
@@ -186,9 +186,6 @@ void Table::displayTableSummary() {
     for (auto it = myTable.begin(); it != myTable.end(); it++) {
         it->display();
     }
-    // for (const aRow& row : myTable) {
-    //     row.display();
-    // }
 }
 
 void Table::display() {
@@ -199,62 +196,84 @@ void Table::display() {
     for (auto it = myTable.begin(); it != myTable.end(); it++) {
         it->display();
     }
-    // for (const aRow& row : myTable) {
-    //     row.display();
-    // }
 }
 
-// Function to read CSV data from a GitHub raw file URL
-bool readCsvFromUrl(const string& url, Table& table) {
-    // Create an HTTP GET request to fetch the raw content
-    // You can use a library like libcurl for this purpose
-    // Here, we assume you have already fetched the content and stored it in 'csvContent'
-    string csvContent = "Your CSV content here"; // Replace with actual CSV content
-
-    // Parse the CSV content and populate the 'table' object
-    stringstream ss(csvContent);
-    string line;
-    while (getline(ss, line)) {
-        stringstream lineStream(line);
-        aRow row;
-        string cell;
-        while (getline(lineStream, cell, ',')) {
-            row.myRow.push_back(cell);
-        }
-        table.myTable.push_back(row);
-    }
-
-    return true;
+vector<string> split(const string& s)
+{
+    stringstream ss(s);
+    vector<string> words;
+    for (string w; ss >> w; ) words.push_back(w);
+    return words;
 }
+
+
 
 int main() {
     Table* aTable;
     int headerOrNot;
+    string csvFileName;
+    ifstream csvFile;
     int numColumns;
     int numRows;
+    fstream infile;
+    infile.open("input1.txt", ios::in);
+    string mychar[10];
 
-    cin >> headerOrNot;
-    cin >> numColumns;
+    if (infile.is_open()) {
+        int i = 0;
+        string s;
+        while (getline(infile, s)){
+            mychar[i] = s;
+            i++;
+
+        }
+        cout << "1" << endl;
+    }
+    
+    infile.close();
+        auto words = split(mychar[0]);
+    string temp[2];
+    int i = 0;
+    for (auto& w : words) {
+        temp[i++] = w;
+    }
+    headerOrNot = stoi(temp[0]);
+    
+    csvFileName = temp[1];
+    numColumns = stoi(mychar[1]);
 
     // Create a Table instance
     aTable = new Table();
-
+    i = 0;
+    int j = 2;
     // Read the data types and store them in *aTable object
-    for (int i = 0; i < numColumns; i++) {
+    for (i ,j; i < numColumns; i++,j++) {
         string colType;
-        cin >> colType;
+        colType = mychar[j];
         aTable->colTypes.push_back(colType);
     }
 
-    cin >> numRows;
-
-    // Read CSV data from the GitHub raw file URL
-    string githubCsvUrl = "https://raw.githubusercontent.com/omkarreddy999/project1/master/biostats.csv";
-    if (!readCsvFromUrl(githubCsvUrl, *aTable)) {
-        cerr << "Error: Unable to read CSV data from GitHub." << endl;
+    numRows == stoi(mychar[j]);
+    cout << "2" << endl;
+    // Open and read the CSV file
+    csvFile.open(csvFileName);
+    if (!csvFile.is_open()) {
+        cerr << "Error: Unable to open CSV file." << endl;
         return 1;
     }
 
+    // Read and store the CSV data in aTable
+    string line;
+    while (getline(csvFile, line)) {
+        stringstream ss(line);
+        aRow row;
+        string cell;
+        while (getline(ss, cell, ',')) {
+            row.myRow.push_back(cell);
+        }
+        aTable->myTable.push_back(row);
+    }
+    cout << "3" << endl;
     cout << "Table Summary:" << endl;
     aTable->displayTableSummary();
 
