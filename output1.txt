@@ -1,0 +1,112 @@
+
+
+Displaying Table Summary:
+Rows: 18
+Columns: 5
+Total missing values: 0
+
+Displaying Table:
+"Name"      "Sex"  "Age"  "Height (in)"  "Weight (lbs)" 
+"Alex"        "M"    41        74       170 
+
+"Bert"        "M"    42        68       166 
+
+"Carl"        "M"    32        70       155 
+
+"Dave"        "M"    39        72       167 
+
+"Elly"        "F"    30        66       124 
+
+"Fran"        "F"    33        66       115 
+
+"Gwen"        "F"    26        64       121 
+
+"Hank"        "M"    30        71       158 
+
+"Ivan"        "M"    53        72       175 
+
+"Jake"        "M"    32        69       143 
+
+"Kate"        "F"    47        69       139 
+
+"Luke"        "M"    34        72       163 
+
+"Myra"        "F"    23        62        98 
+
+"Neil"        "M"    36        75       160 
+
+"Omar"        "M"    38        70       145 
+
+"Page"        "F"    31        67       135 
+
+"Quin"        "M"    29        71       176 
+
+"Ruth"        "F"    28        65       131 
+
+Displaying Table Summary:
+Rows: 18
+Columns: 4
+Total missing values: 0
+
+Displaying Table:
+"Name"      "Sex"  "Weight (lbs)"  "Age" 
+"Alex"        "M"       170    41 
+
+"Bert"        "M"       166    42 
+
+"Carl"        "M"       155    32 
+
+"Dave"        "M"       167    39 
+
+"Elly"        "F"       124    30 
+
+"Fran"        "F"       115    33 
+
+"Gwen"        "F"       121    26 
+
+"Hank"        "M"       158    30 
+
+"Ivan"        "M"       175    53 
+
+"Jake"        "M"       143    32 
+
+"Kate"        "F"       139    47 
+
+"Luke"        "M"       163    34 
+
+"Myra"        "F"        98    23 
+
+"Neil"        "M"       160    36 
+
+"Omar"        "M"       145    38 
+
+"Page"        "F"       135    31 
+
+"Quin"        "M"       176    29 
+
+"Ruth"        "F"       131    28 
+
+Displaying Table Summary:
+Rows: 7
+Columns: 2
+Total missing values: 0
+
+Displaying Table:
+ "Weight (lbs)"  "Age" 
+      170    41 
+
+      166    42 
+
+      155    32 
+
+      167    39 
+
+      124    30 
+
+      115    33 
+
+      121    26 
+69.055557
+176
+26
+0
