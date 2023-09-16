@@ -31,7 +31,7 @@ public:
 
     ~Table();
 
-    Table* selectColumns(int* colNums);
+    Table* selectColumns(int* colNums, int len);
 
     Table* subsetTable(int bRow, int eRow, int bCol, int eCol);
 
@@ -78,17 +78,28 @@ Table::~Table() {
     // Implement destructor for Table if needed
 }
 
-Table* Table::selectColumns(int* colNums) {
+Table* Table::selectColumns(int* colNums, int len) {
+
+    // stringstream ss(line);
+    //     aRow row;
+    //     string cell;
+    //     while (getline(ss, cell, ',')) {
+    //         row.myRow.push_back(cell);
+    //     }
+    //     aTable->myTable.push_back(row);
     Table* newTable = new Table();
+    //int len = *(&colNums + 1) - colNums;
+    //int len = sizeof(colNums) / sizeof(int);
+    //cout << len << endl;
     for (int rowNum = 0; rowNum < myTable.size(); rowNum++) {
         aRow newRow;
-        for (int i = 0; colNums[i] != -1; i++) {
-            int col = colNums[i];
-            if (col < myTable[rowNum].myRow.size()) {
-                newRow.myRow.push_back(myTable[rowNum].myRow[col]);
-            }
+        for (int i = 0;i < len;i++) {
+            newRow.myRow.push_back(myTable[rowNum].myRow[colNums[i] % 5]);
         }
         newTable->myTable.push_back(newRow);
+        // if (rowNum == 0) {
+        //     newTable->colTypes.push_back(newRow);
+        // }
     }
     return newTable;
 }
@@ -174,18 +185,28 @@ int Table::missingValues(int colNum) {
 }
 
 void Table::displayTableSummary() {
-    cout << "Number of rows: " << myTable.size() << endl;
-    cout << "Number of columns: " << colTypes.size() << endl;
-    cout << "Total number of missing values: " << missingValues(0) << endl;
-    cout << "Table Headers: ";
+    cout << "Rows: " << myTable.size() - 1 << endl;
+    cout << "Columns: " << colTypes.size() << endl;
+    cout << "Total missing values: " << missingValues(0) << endl;
+    cout << " " << endl;
+    cout << "Displaying Table: ";
     for (int i = 0; i < colNames.size(); i++) {
         cout << (colNames[i].empty() ? to_string(i + 1) : colNames[i]) << "\t";
+
     }
     cout << endl;
 
-    for (auto it = myTable.begin(); it != myTable.end(); it++) {
+    for (auto it = myTable.begin(); it != myTable.begin()+1; it++) {
         it->display();
+        
+       
     }
+    for (auto it = myTable.begin()+1; it != myTable.end(); it++) {
+        it->display();
+        cout << " " << endl;
+
+    }
+    
 }
 
 void Table::display() {
@@ -222,23 +243,23 @@ int main() {
     if (infile.is_open()) {
         int i = 0;
         string s;
-        while (getline(infile, s)){
+        while (getline(infile, s)) {
             mychar[i] = s;
             i++;
 
         }
-        cout << "1" << endl;
+        // cout << "1" << endl;
     }
-    
+
     infile.close();
-        auto words = split(mychar[0]);
+    auto words = split(mychar[0]);
     string temp[2];
     int i = 0;
     for (auto& w : words) {
         temp[i++] = w;
     }
     headerOrNot = stoi(temp[0]);
-    
+
     csvFileName = temp[1];
     numColumns = stoi(mychar[1]);
 
@@ -247,14 +268,14 @@ int main() {
     i = 0;
     int j = 2;
     // Read the data types and store them in *aTable object
-    for (i ,j; i < numColumns; i++,j++) {
+    for (i, j; i < numColumns; i++, j++) {
         string colType;
         colType = mychar[j];
         aTable->colTypes.push_back(colType);
     }
 
     numRows == stoi(mychar[j]);
-    cout << "2" << endl;
+    //cout << "2" << endl;
     // Open and read the CSV file
     csvFile.open(csvFileName);
     if (!csvFile.is_open()) {
@@ -273,25 +294,34 @@ int main() {
         }
         aTable->myTable.push_back(row);
     }
-    cout << "3" << endl;
-    cout << "Table Summary:" << endl;
+    //cout << "3" << endl;
+    cout << " " << endl;
+    cout << " " << endl;
+    cout << "Displaying Table Summary:" << endl;
     aTable->displayTableSummary();
 
     int cols[] = { 0, 1, 4, 7 };
-    Table* bTable = aTable->selectColumns(cols);
+    int len = sizeof(cols) / sizeof(int);
+    Table* bTable = aTable->selectColumns(cols, len);
+    for (int i = 0; i < len; i++) {
+        string colType;
+        colType = mychar[cols[i] % 5];
+        bTable->colTypes.push_back(colType);
+    }
+    //cout << "Here" << endl;
 
-    cout << "Selected Columns Summary:" << endl;
+    cout << "Displaying Table Summary:" << endl;
     bTable->displayTableSummary();
 
-    Table* cTable = bTable->subsetTable(0, 99, 2, 3);
+    Table* cTable = bTable->subsetTable(0, 7, 2, 3);
 
-    cout << "Subset Table Summary:" << endl;
+    cout << "Displaying Table Summary:" << endl;
     cTable->displayTableSummary();
 
-    cout << "Column 3 Average: " << aTable->columnAverage(3) << endl;
-    cout << "Column 2 Max: " << bTable->columnMax(2) << endl;
-    cout << "Column 1 Min: " << cTable->columnMin(1) << endl;
-    cout << "Missing Values in Column 4: " << aTable->missingValues(4) << endl;
+    cout << "" << aTable->columnAverage(3) << endl;
+    cout << "" << bTable->columnMax(2) << endl;
+    cout << "" << cTable->columnMin(1) << endl;
+    cout << "" << aTable->missingValues(4) << endl;
 
     // Clean up memory
     delete aTable;
