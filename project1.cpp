@@ -93,7 +93,7 @@ Table* Table::selectColumns(int* colNums, int len) {
     //cout << len << endl;
     for (int rowNum = 0; rowNum < myTable.size(); rowNum++) {
         aRow newRow;
-        for (int i = 0;i < len;i++) {
+        for (int i = 0; i < len; i++) {
             newRow.myRow.push_back(myTable[rowNum].myRow[colNums[i] % 5]);
         }
         newTable->myTable.push_back(newRow);
@@ -196,17 +196,17 @@ void Table::displayTableSummary() {
     }
     cout << endl;
 
-    for (auto it = myTable.begin(); it != myTable.begin()+1; it++) {
+    for (auto it = myTable.begin(); it != myTable.begin() + 1; it++) {
         it->display();
-        
-       
+
+
     }
-    for (auto it = myTable.begin()+1; it != myTable.end(); it++) {
+    for (auto it = myTable.begin() + 1; it != myTable.end(); it++) {
         it->display();
         cout << " " << endl;
 
     }
-    
+
 }
 
 void Table::display() {
@@ -259,8 +259,8 @@ int main() {
         temp[i++] = w;
     }
     headerOrNot = stoi(temp[0]);
-    std::ifstream csvfile("biostats.csv");
     csvFileName = "test/" + csvFileName;
+    std::ifstream csvfile("biostats.csv");
     numColumns = stoi(mychar[1]);
 
     // Create a Table instance
