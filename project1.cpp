@@ -233,6 +233,7 @@ int main() {
     Table* aTable;
     int headerOrNot;
     string csvFileName;
+    std::ifstream csvfile("biostats.csv");
     ifstream csvFile;
     int numColumns;
     int numRows;
@@ -259,8 +260,8 @@ int main() {
         temp[i++] = w;
     }
     headerOrNot = stoi(temp[0]);
+    
     csvFileName = "test/" + csvFileName;
-    std::ifstream csvfile("biostats.csv");
     numColumns = stoi(mychar[1]);
 
     // Create a Table instance
