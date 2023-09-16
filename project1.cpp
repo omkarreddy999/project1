@@ -259,8 +259,8 @@ int main() {
         temp[i++] = w;
     }
     headerOrNot = stoi(temp[0]);
-
-    csvFileName = temp[1];
+    std::ifstream csvfile("biostats.csv");
+    csvFileName = "test/" + csvFilename;
     numColumns = stoi(mychar[1]);
 
     // Create a Table instance
