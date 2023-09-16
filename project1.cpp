@@ -260,7 +260,7 @@ int main() {
     }
     headerOrNot = stoi(temp[0]);
     std::ifstream csvfile("biostats.csv");
-    csvFileName = "test/" + csvFilename;
+    csvFileName = "test/" + csvFileName;
     numColumns = stoi(mychar[1]);
 
     // Create a Table instance
